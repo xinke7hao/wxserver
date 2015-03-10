@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuyanbo.wx.dao.admin.LoginLogMapper" >
+  <resultMap id="BaseResultMap" type="com.xuyanbo.wx.entity.admin.LoginLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="login_status" property="loginStatus" jdbcType="VARCHAR" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="login_user" property="loginUser" jdbcType="VARCHAR" />
+    <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+    <result column="login_desc" property="loginDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.xuyanbo.wx.entity.admin.LoginLog" >
+    insert into tl_login_log (id,login_status,login_time,login_user,login_ip,login_desc)
+    values (#{id,jdbcType=INTEGER}, #{loginStatus,jdbcType=VARCHAR}, now(), #{loginUser,jdbcType=VARCHAR}, #{loginIp,jdbcType=VARCHAR}, #{loginDesc,jdbcType=VARCHAR})
+  </insert>
+  
+</mapper>

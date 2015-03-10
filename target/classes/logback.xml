@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    
+    <property name="LOG_HOME" value="/usr/logs" />
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{0} - %msg %n</pattern>   
+        </encoder>
+    </appender>
+    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/bmc.%d{yyyy-MM-dd}.log</FileNamePattern> 
+            <MaxHistory>60</MaxHistory>
+        </rollingPolicy>   
+        <encoder> 
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{0} - %msg %n</pattern>   
+        </encoder> 
+       <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+         <MaxFileSize>10MB</MaxFileSize>
+       </triggeringPolicy>
+    </appender> 
+    
+<!--     <logger name="com.hunantv.bmc" additivity="false"> -->
+<!--         <level value="DEBUG" /> -->
+<!--         <appender-ref ref="consoleAppender" /> -->
+<!--     </logger> -->
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+    
+</configuration>

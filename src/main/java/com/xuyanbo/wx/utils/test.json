@@ -1,0 +1,79 @@
+{
+msg: "",
+data: {
+"pay@hunantv.com": {
+201501: {
+103: {
+total_count: 1975,
+total_amount: 120340,
+total_income: 120045.63,
+total_poundage: 294.54,
+platform_name: "OTT-银鲨"
+},
+1018: {
+total_count: 1072,
+total_amount: 10475.01,
+total_income: 10426.91,
+total_poundage: 48.28,
+platform_name: "MPP"
+}
+},
+201502: {
+103: {
+total_count: 123,
+total_amount: 7920,
+total_income: 7901.36,
+total_poundage: 18.65,
+platform_name: "OTT-银鲨"
+},
+1018: {
+total_count: 109,
+total_amount: 905,
+total_income: 900.83,
+total_poundage: 4.19,
+platform_name: "MPP"
+}
+}
+},
+"pay_tv@hunantv.com": {
+201501: {
+103: {
+total_count: 45127,
+total_amount: 2113352.26,
+total_income: 2073298.62,
+total_poundage: 40053.64,
+platform_name: "OTT-银鲨"
+},
+1018: {
+total_count: 12,
+total_amount: 0.13,
+total_income: 0.13,
+total_poundage: 0,
+platform_name: "MPP"
+}
+},
+201502: {
+103: {
+total_count: 3041,
+total_amount: 117853,
+total_income: 115575.1,
+total_poundage: 2277.9,
+platform_name: "OTT-银鲨"
+}
+}
+},
+"gc.liuyj@gmail.com": { },
+"liyi@e.hunantv.com": {
+201501: {
+103: {
+total_count: 11,
+total_amount: 65,
+total_income: 65,
+total_poundage: 0,
+platform_name: "OTT-银鲨"
+}
+}
+}
+},
+code: 0
+}

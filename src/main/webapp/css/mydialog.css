@@ -1,0 +1,66 @@
+/* Overlays */
+.ui-widget-overlay { background: #eeeeee; opacity: .50;filter:Alpha(Opacity=50); }
+.ui-widget-shadow { margin: -4px 0 0 -4px; padding: 4px; background: #aaaaaa; opacity: .60;filter:Alpha(Opacity=60); -moz-border-radius: 0px; -khtml-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; }
+.ui-widget { font-family: Helvetica, Arial, sans-serif; font-size: 1.1em; }
+.ui-widget .ui-widget { font-size: 1em; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Helvetica, Arial, sans-serif; font-size: 1em; }
+.ui-widget-content { border: 1px solid #dddddd;  color: #444444; background: #ffffff; }
+.ui-widget-content a { color: #444444; }
+.ui-widget-header { border: 1px solid #dddddd; background: #dddddd; color: #444444; font-weight: bold; }
+.ui-widget-header a { color: #444444; }
+
+/* Dialog */
+.ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
+.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative;  }
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
+.ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
+.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
+.ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
+.ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 2px; bottom: 2px; }
+.ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+.ui-dialog-titlebar {border:none;border-bottom-width:2px;padding:.6em 1em .6em 1em !important;font-weight:bold;font-size:1.1em;}
+.ui-dialog-buttonpane{border-top-width:2px !important;margin-top:0 !important;}
+.ui-dialog .ui-dialog-titlebar-close{visibility: hidden;}
+.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.ui-dialog-titlebar-close > .ui-icon{margin:4px !important;}
+
+/* Dialog states */
+.ui-dialog{border-color:darkslategray;background-color:lightgray !important;border-width:1px;padding:0;}
+.ui-dialog-titlebar{border-color:darkslategray; font-size: 13px; color:#ffffff;background-color:darkslategray;}
+.ui-dialog-buttonpane{border-color:lightgray !important;background-color:lightgray;}
+.ui-dialog-content{	background-color: #fff; background: linear-gradient(white, lightgray) !important;}
+.ui-dialog-titlebar .ui-icon{background-image:url(../images/ui-icons_ffffff_0.png);}
+.ui-dialog-titlebar .ui-state-hover .ui-icon{background-image:url(../images/ui-icons_3399ff_0.png) !important;}
+.ui-dialog-titlebar-close{background-image:url(../images/ui-icons_ffffff_0.png) !important;background-position: -232px -216px !important;}
+.ui-dialog-titlebar-close.ui-state-hover{background:url(../images/ui-icons_ffffff_0.png) !important;background-position: -232px -168px !important;}
+
+/* Dialog Buttons */
+/* div.ui-dialog-buttonpane button.cancel { background:none; border:0px none;color:red; } */
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .btn-approve,
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .btn-cancel,
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .btn-alarm {
+	width: 70px;
+	height: 30px;
+	font-size: 12px;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .btn-approve {
+	background: green;
+	color: white;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .btn-cancel {
+	background: gray;
+	color: white;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .btn-alarm {
+	background: #900;
+	color: white;
+}

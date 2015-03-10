@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hunantv.mbp.dao.admin.MenuMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.hunantv.mbp.entity.admin.Menu" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="menu_pid" property="menuPid" jdbcType="INTEGER" />
+    <result column="menu_code" property="menuCode" jdbcType="VARCHAR" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_status" property="menuStatus" jdbcType="VARCHAR" />
+    <result column="menu_index" property="menuIndex" jdbcType="INTEGER" />
+    <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="menu_desc" property="menuDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="menuBarResult" type="com.hunantv.mbp.entity.admin.Menu" >
+    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_code" property="menuCode" jdbcType="VARCHAR" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_methods" property="menuMethods" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    menu_id, module_id, menu_pid, menu_code, menu_name, menu_url, menu_status, menu_index
+  </sql>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="Base_Column_List" /> from tm_menu where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getFullMenuById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select n.menu_id, m.module_id, m.module_name, n.menu_pid, n.menu_name, n.menu_status, n.menu_desc from tm_module m, tm_menu n 
+    where m.module_id = n.module_id and menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getMenusByModuleId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select menu_id, menu_name from tm_menu where module_id = #{moduleId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getAllMenus" resultMap="menuBarResult" >
+    select b.menu_id, a.module_name, b.menu_code, b.menu_name from tm_module a, tm_menu b where a.module_id = b.module_id order by a.module_index, b.menu_index
+  </select>
+  
+  <select id="selectUserMenuBar" resultMap="menuBarResult" parameterType="java.lang.Integer" >    
+    SELECT distinct n.menu_id, m.module_name, m.icon, n.menu_name, n.menu_url
+	FROM tm_role r, tr_user_role ur, tm_module m, tm_menu n, tm_right a, tr_role_right ra
+	WHERE r.role_id = ur.role_id AND r.role_id = ra.role_id AND a.right_id = ra.right_id AND m.module_id = n.module_id
+	AND n.menu_id = a.menu_id AND r.role_status = 'Y' AND m.module_status = 'Y' AND n.menu_status = 'Y' AND a.right_status = 'Y'
+	AND ur.user_id = #{userId,jdbcType=INTEGER}
+    ORDER BY m.module_index, n.menu_index
+  </select>
+  
+  <select id="selectAllMenuBar" resultMap="menuBarResult" >    
+    SELECT distinct n.menu_id, m.module_name, m.icon, n.menu_name, n.menu_url
+	FROM tm_module m, tm_menu n	WHERE m.module_id = n.module_id AND m.module_status = 'Y' AND n.menu_status = 'Y'
+    ORDER BY m.module_index, n.menu_index
+  </select>
+  
+  <select id="selectUserMenuRights" resultMap="menuBarResult" parameterType="java.lang.Integer" >    
+    select m.menu_url, CONCAT(group_concat(r.right_method), ',') as menu_methods 
+    from tr_user_role ur, tm_role ro, tr_role_right rr, tm_right r, tm_menu m
+	where ur.user_id = #{userId,jdbcType=INTEGER} and ur.role_id = ro.role_id and ro.role_status = 'Y'
+	and rr.role_id = ro.role_id and rr.right_id = r.right_id and r.menu_id = m.menu_id
+	and m.menu_status = 'Y' and r.right_status = 'Y' group by m.menu_url order by m.menu_index
+  </select>
+  
+  <select id="selectAllMenuRights" resultMap="menuBarResult" >    
+    select m.menu_url, group_concat(r.right_method) as menu_methods from tm_right r, tm_menu m
+	where r.menu_id = m.menu_id and m.menu_status = 'Y' and r.right_status = 'Y' group by m.menu_url order by m.menu_index
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from tm_menu where menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hunantv.mbp.entity.admin.Menu" >
+    insert into tm_menu (menu_id, module_id, menu_pid, menu_code, menu_name, menu_url, menu_status, menu_index)
+    values (#{menuId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, #{menuPid,jdbcType=INTEGER}, 
+      #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, 
+      #{menuStatus,jdbcType=VARCHAR}, #{menuIndex,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateDesc" parameterType="com.hunantv.mbp.entity.admin.Menu" >
+    update tm_menu set menu_desc = #{menuDesc,jdbcType=VARCHAR} where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateById" parameterType="com.hunantv.mbp.entity.admin.Menu" >
+    update tm_menu
+    set module_id = #{moduleId,jdbcType=INTEGER},
+      menu_pid = #{menuPid,jdbcType=INTEGER},
+      menu_code = #{menuCode,jdbcType=VARCHAR},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      menu_status = #{menuStatus,jdbcType=VARCHAR},
+      menu_index = #{menuIndex,jdbcType=INTEGER}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+</mapper>

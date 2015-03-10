@@ -1,0 +1,42 @@
+#accordion {
+    width: 200px;
+    min-height: 600px;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+#accordion h3 {
+    margin-top: 1px;
+    line-height: 25px;
+}
+#accordion ul {
+    margin-top: 1px;
+    padding-bottom: 15px;
+    padding: 0px;
+}
+#accordion ul li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+    line-height: 25px;
+}
+#accordion h3 a {
+    padding: 0px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
+}
+#accordion li.hover { background: lightgray }
+#accordion ul li a {
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 25px;
+    margin-left: 10px;
+    padding : 0 15px;
+    position: relative;
+    padding: 0 10px;
+}
+#accordion ul li.active {
+    background: lightgray;
+    padding-left: 15px;
+}

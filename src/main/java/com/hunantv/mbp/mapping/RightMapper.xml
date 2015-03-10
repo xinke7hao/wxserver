@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hunantv.mbp.dao.admin.RightMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.hunantv.mbp.entity.admin.Right" >
+    <id column="right_id" property="rightId" jdbcType="INTEGER" />
+    <result column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="right_name" property="rightName" jdbcType="VARCHAR" />
+    <result column="right_method" property="rightMethod" jdbcType="VARCHAR" />
+    <result column="right_status" property="rightStatus" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="rightResultMap" type="com.hunantv.mbp.dto.RightVo" >
+    <result column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="module_status" property="moduleStatus" jdbcType="VARCHAR" />
+    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_code" property="menuCode" jdbcType="VARCHAR" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_status" property="menuStatus" jdbcType="VARCHAR" />
+    <result column="right_id" property="rightId" jdbcType="INTEGER" />
+    <result column="right_name" property="rightName" jdbcType="VARCHAR" />
+    <result column="right_method" property="rightMethod" jdbcType="VARCHAR" />
+    <result column="right_status" property="rightStatus" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BaseFullResultMap" type="com.hunantv.mbp.entity.admin.Right" >
+    <result column="right_id" property="rightId" jdbcType="INTEGER" />
+    <result column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="right_name" property="rightName" jdbcType="VARCHAR" />
+    <result column="right_method" property="rightMethod" jdbcType="VARCHAR" />
+    <result column="right_status" property="rightStatus" jdbcType="VARCHAR" />
+    <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    right_id, module_id, menu_id, right_name, right_method, right_status, create_time, update_time
+  </sql>
+  
+  <select id="selectFullRightById" resultMap="BaseFullResultMap" parameterType="java.lang.Integer" >
+    select r.right_id, r.module_id, r.menu_id, r.right_name, r.right_method, r.right_status, m.module_name, n.menu_name
+    from tm_right r, tm_menu n, tm_module m where r.module_id = m.module_id and r.menu_id = n.menu_id
+    and r.right_id = #{rightId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectRightIdsByRole" resultType="Integer" parameterType="java.lang.Integer">
+	select r.right_id from tm_right r where r.right_id in (select right_id from tr_role_right where role_id = #{value,jdbcType=INTEGER})
+  </select>
+  
+  <select id="selectAllByStatus" resultMap="BaseFullResultMap" parameterType="java.lang.String">
+  	select m.module_id, m.module_name, n.menu_id, n.menu_name, r.right_id, r.right_name from tm_module m, tm_menu n, tm_right r 
+  	where m.module_id = r.module_id and n.menu_id = r.menu_id and m.module_status = #{value,jdbcType=VARCHAR}
+    order by m.module_id, n.menu_id, r.right_id
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="Base_Column_List" /> from tm_right where right_id = #{rightId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from tm_right where right_id = #{rightId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByIds" parameterType="list" >
+    delete from tm_right where right_id in <foreach collection="list" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+  
+  <insert id="insert" parameterType="com.hunantv.mbp.entity.admin.Right" >
+    insert into tm_right (right_id, module_id, menu_id, 
+      right_name, right_method, right_status, create_time, update_time)
+    values (#{rightId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, 
+      #{rightName,jdbcType=VARCHAR}, #{rightMethod,jdbcType=VARCHAR}, #{rightStatus,jdbcType=VARCHAR}, now(), now())
+  </insert>
+  
+  <update id="updateById" parameterType="com.hunantv.mbp.entity.admin.Right" >
+    update tm_right
+    set module_id = #{moduleId,jdbcType=INTEGER},
+      menu_id = #{menuId,jdbcType=INTEGER},
+      right_name = #{rightName,jdbcType=VARCHAR},
+      right_method = #{rightMethod,jdbcType=VARCHAR},
+      right_status = #{rightStatus,jdbcType=VARCHAR},
+      update_time = now()
+    where right_id = #{rightId,jdbcType=INTEGER}
+  </update>
+</mapper>

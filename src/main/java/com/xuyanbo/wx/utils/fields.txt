@@ -1,0 +1,12 @@
+status: 0,
+status_str: "正常",
+uuid: "FFFFFFFFFFFF",
+created_at: "2014-12-30T09:42:03",
+fee_percent: 0,
+updated_at: "2014-12-30T09:42:03",
+discount: 1,
+fee_per_trans: null,
+discount_str: "-",
+fee_str: "-",
+id: 1,
+name: "芒果币支付"

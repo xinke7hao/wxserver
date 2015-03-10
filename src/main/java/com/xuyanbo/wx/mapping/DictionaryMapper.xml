@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuyanbo.wx.dao.admin.DictionaryMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.xuyanbo.wx.entity.admin.Dictionary" >
+    <id column="dict_id" property="dictId" jdbcType="INTEGER" />
+    <result column="dict_code" property="dictCode" jdbcType="VARCHAR" />
+    <result column="dict_value" property="dictValue" jdbcType="VARCHAR" />
+    <result column="dict_desc" property="dictDesc" jdbcType="VARCHAR" />
+    <result column="dict_group" property="dictGroup" jdbcType="VARCHAR" />
+    <result column="is_display" property="isDisplay" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="getDictionariesByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select dict_value, dict_desc, dict_group from tm_dictionary where is_display = 'Y' and dict_code = #{dictCode,jdbcType=VARCHAR} order by dict_group, dict_value
+  </select>
+  
+  <select id="getValueByCode" resultType="java.lang.String" parameterType="java.lang.String" >
+    select dict_value from tm_dictionary where dict_code = #{dictCode,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- System Data (Platform / Channel) -->
+  <delete id="delete" parameterType="com.xuyanbo.wx.entity.admin.SystemData" >
+    delete from tm_system_data where data_type = #{dataType,jdbcType=VARCHAR} and data_id = #{dataId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteGroupData" parameterType="com.xuyanbo.wx.entity.admin.SystemData" >
+    delete from tr_group_data where data_type = #{dataType,jdbcType=VARCHAR} and data_id = #{dataId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xuyanbo.wx.entity.admin.SystemData" >
+    insert into tm_system_data (data_type, data_id, data_code, data_name, data_status)
+    values (#{dataType,jdbcType=VARCHAR}, #{dataId,jdbcType=INTEGER}, #{dataCode,jdbcType=VARCHAR}, #{dataName,jdbcType=VARCHAR}, #{dataStatus,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="update" parameterType="com.xuyanbo.wx.entity.admin.SystemData" >
+    update tm_system_data
+    set data_code = #{dataCode,jdbcType=VARCHAR}, data_name = #{dataName,jdbcType=VARCHAR}, data_status = #{dataStatus,jdbcType=VARCHAR}
+    where data_type = #{dataType,jdbcType=VARCHAR} and data_id = #{dataId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateStatus" parameterType="com.xuyanbo.wx.entity.admin.SystemData" >
+    update tm_system_data
+    set data_status = #{dataStatus,jdbcType=VARCHAR}
+    where data_type = #{dataType,jdbcType=VARCHAR} and data_id = #{dataId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

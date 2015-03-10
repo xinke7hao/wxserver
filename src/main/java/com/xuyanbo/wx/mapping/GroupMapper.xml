@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuyanbo.wx.dao.admin.GroupMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.xuyanbo.wx.entity.admin.Group" >
+    <id column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="group_status" property="groupStatus" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="SimpleResultMap" type="com.xuyanbo.wx.entity.admin.Group" >
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="groupDataMap" type="com.xuyanbo.wx.entity.admin.GroupData" >
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="data_id" property="dataId" jdbcType="INTEGER" />
+    <result column="data_name" property="dataName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    group_id, group_name, group_status, create_time, update_time
+  </sql>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="Base_Column_List" /> from tm_group where group_id = #{groupId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getUserGroups" resultMap="SimpleResultMap" parameterType="java.lang.Integer" >
+    select g.group_id, g.group_name, ug.user_id from tm_group g left join tr_user_group ug on g.group_id = ug.group_id 
+    and ug.user_id = #{userId,jdbcType=INTEGER} and g.group_status = 'Y' order by g.group_id
+  </select>
+  
+  <select id="selectAllGroupDatas" resultMap="groupDataMap" parameterType="java.lang.Integer" >
+  	select g.group_id, d.data_type, d.data_id, d.data_name from (select data_type, data_id, data_name from tm_system_data where data_status = 'Y' ) d 
+  	left join tr_group_data g on g.data_type = d.data_type and g.data_id = d.data_id 
+  	and g.group_id = #{groupId,jdbcType=INTEGER} 
+  	order by d.data_type, d.data_id desc
+  </select>
+  
+  <select id="getDepartmentGroupDatas" resultMap="groupDataMap" parameterType="java.lang.Integer" >
+  	select s.group_id, 'D' as data_type, d.depart_id as data_id, d.depart_name as data_name from tm_department d 
+  	left join tr_group_data s on d.depart_id = s.data_id and s.data_type = 'D' 
+  	and s.group_id = #{groupId,jdbcType=INTEGER} order by d.depart_id
+  </select>
+  
+  <select id="getAllGroupDatas" resultMap="groupDataMap" >
+  	select d.data_type, group_concat(d.data_id) as data_id from tm_system_data d where d.data_status = 'Y' group by d.data_type;
+  </select>
+  
+  <select id="getUserGroupDatas" resultMap="groupDataMap" parameterType="java.lang.Integer" >
+  	select d.data_type, group_concat(d.data_id) as data_id from tr_user_group u, tm_group g, tr_group_data d
+	where u.group_id = g.group_id and g.group_id = d.group_id and u.user_id = #{userId,jdbcType=INTEGER} and d.data_type != 'D'
+	group by d.data_type;
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from tm_group where group_id = #{groupId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByIds" parameterType="list" >
+    delete from tm_group where group_id in <foreach collection="list" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+  
+  <insert id="insert" parameterType="com.xuyanbo.wx.entity.admin.Group" >
+    insert into tm_group (group_id, group_name, group_status, create_time, update_time)
+    values (#{groupId,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{groupStatus,jdbcType=VARCHAR}, now(), now())
+  </insert>
+  
+  <update id="updateById" parameterType="com.xuyanbo.wx.entity.admin.Group" >
+    update tm_group set group_name = #{groupName,jdbcType=VARCHAR}, group_status = #{groupStatus,jdbcType=VARCHAR}, update_time = now() where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteGroupDatas" parameterType="java.lang.Integer" >
+    delete from tr_group_data where group_id = #{groupId,jdbcType=INTEGER}
+  </delete>
+  
+</mapper>

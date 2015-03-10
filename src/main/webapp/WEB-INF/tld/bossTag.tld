@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+  <tlib-version>1.0</tlib-version>
+  <short-name>bmcTag</short-name>
+  <uri>http://www.hunantv.com/mbp-bmc-tags</uri>
+
+  <tag>
+  	<name>authority</name>
+  	<tag-class>com.xuyanbo.wx.utils.BmcRightTag</tag-class>
+  	<body-content>scriptless</body-content>
+  	<attribute>
+  		<name>authorities</name>
+  		<required>true</required>
+  		<rtexprvalue>true</rtexprvalue>
+  		<type>java.util.Map</type>
+  	</attribute>
+  	<attribute>
+  		<name>menu</name>
+  		<required>true</required>
+  		<rtexprvalue>true</rtexprvalue>
+  		<type>java.lang.String</type>
+  	</attribute>
+  	<attribute>
+  		<name>right</name>
+  		<required>true</required>
+  		<rtexprvalue>true</rtexprvalue>
+  		<type>java.lang.String</type>
+  	</attribute>
+  	<attribute>
+  		<name>isAdmin</name>
+  		<required>true</required>
+  		<rtexprvalue>true</rtexprvalue>
+  		<type>java.lang.String</type>
+  	</attribute>
+  </tag>
+  
+</taglib>

@@ -1,0 +1,214 @@
+/* ------------------------------------------
+ * http://github.com/necolas/css3-github-buttons
+ * --------------------------------------- */
+.button {
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+    padding: 0.5em 1em;
+    border: 1px solid #847878;
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+    font: 70% Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    outline: none;
+    border-radius: 0.2em;
+}
+.button:hover,
+.button:focus,
+.button:active,
+.button.active {
+    border-color: #3072b3;
+    border-bottom-color: #2a65a0;
+    text-decoration: none;
+    color: #fff;
+    background-color: #3c8dde;
+}
+.button:active,
+.button.active {
+    border-color: #2a65a0;
+    border-bottom-color: #3884cd;
+    background-color: #3072b3;
+}
+/* overrides extra padding on button elements in Firefox */
+.button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+/* Button icons */
+.button:before {
+    content: "";
+    position: relative;
+    top: 1px;
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin: 0 0.75em 0 -0.25em;
+    background: url(../images/gh-icons.png) 0 99px no-repeat;
+}
+.button.arrowup:before { background-position: 0 0 }
+.button.arrowup:hover:before,
+.button.arrowup:focus:before,
+.button.arrowup:active:before { background-position: -12px 0 }
+.button.arrowdown:before { background-position: 0 -12px }
+.button.arrowdown:hover:before,
+.button.arrowdown:focus:before,
+.button.arrowdown:active:before { background-position: -12px -12px }
+.button.arrowleft:before { background-position: 0 -24px }
+.button.arrowleft:hover:before,
+.button.arrowleft:focus:before,
+.button.arrowleft:active:before { background-position: -12px -24px }
+.button.arrowright:before {
+    float: right;
+    margin: 0 -0.25em 0 0.5em;
+    background-position: 0 -36px;
+}
+.button.arrowright:hover:before,
+.button.arrowright:focus:before,
+.button.arrowright:active:before { background-position: -12px -36px }
+.button.approve:before { background-position: 0 -48px }
+.button.approve:hover:before,
+.button.approve:focus:before,
+.button.approve:active:before { background-position: -12px -48px }
+.button.add:before { background-position: 0 -288px }
+.button.add:hover:before,
+.button.add:focus:before,
+.button.add:active:before { background-position: -12px -288px }
+.button.remove:before { background-position: 0 -60px }
+.button.remove:hover:before,
+.button.remove:focus:before,
+.button.remove:active:before { background-position: -12px -60px }
+.button.detail:before { background-position: 0 -60px }
+.button.detail:hover:before,
+.button.detail:focus:before,
+.button.detail:active:before { background-img: -12px -60px }
+.button.log:before { background-position: 0 -72px }
+.button.log:hover:before,
+.button.log:focus:before,
+.button.log:active:before { background-position: -12px -72px }
+.button.statis:before { background-position: 0 -84px }
+.button.statis:hover:before,
+.button.statis:focus:before,
+.button.statis:active:before { background-position: -12px -84px }
+.button.chat:before { background-position: 0 -96px }
+.button.chat:hover:before,
+.button.chat:focus:before,
+.button.chat:active:before { background-position: -12px -96px }
+.button.clock:before { background-position: 0 -108px }
+.button.clock:hover:before,
+.button.clock:focus:before,
+.button.clock:active:before { background-position: -12px -108px }
+.button.settings:before { background-position: 0 -120px }
+.button.settings:hover:before,
+.button.settings:focus:before,
+.button.settings:active:before { background-position: -12px -120px }
+.button.comment:before { background-position: 0 -132px }
+.button.comment:hover:before,
+.button.comment:focus:before,
+.button.comment:active:before { background-position: -12px -132px }
+.button.fork:before { background-position: 0 -144px }
+.button.fork:hover:before,
+.button.fork:focus:before,
+.button.fork:active:before { background-position: -12px -144px }
+.button.like:before { background-position: 0 -156px }
+.button.like:hover:before,
+.button.like:focus:before,
+.button.like:active:before { background-position: -12px -156px }
+.button.favorite:before { background-position: 0 -348px }
+.button.favorite:hover:before,
+.button.favorite:focus:before,
+.button.favorite:active:before { background-position: -12px -348px }
+.button.home:before { background-position: 0 -168px }
+.button.home:hover:before,
+.button.home:focus:before,
+.button.home:active:before { background-position: -12px -168px }
+.button.key:before { background-position: 0 -180px }
+.button.key:hover:before,
+.button.key:focus:before,
+.button.key:active:before { background-position: -12px -180px }
+.button.lock:before { background-position: 0 -192px }
+.button.lock:hover:before,
+.button.lock:focus:before,
+.button.lock:active:before { background-position: -12px -192px }
+.button.unlock:before { background-position: 0 -204px }
+.button.unlock:hover:before,
+.button.unlock:focus:before,
+.button.unlock:active:before { background-position: -12px -204px }
+.button.loop:before { background-position: 0 -216px }
+.button.loop:hover:before,
+.button.loop:focus:before,
+.button.loop:active:before { background-position: -12px -216px }
+.button.search:before { background-position: 0 -228px }
+.button.search:hover:before,
+.button.search:focus:before,
+.button.search:active:before { background-position: -12px -228px }
+.button.mail:before { background-position: 0 -240px }
+.button.mail:hover:before,
+.button.mail:focus:before,
+.button.mail:active:before { background-position: -12px -240px }
+.button.move:before { background-position: 0 -252px }
+.button.move:hover:before,
+.button.move:focus:before,
+.button.move:active:before { background-position: -12px -252px }
+.button.edit:before { background-position: 0 -264px }
+.button.edit:hover:before,
+.button.edit:focus:before,
+.button.edit:active:before { background-position: -12px -264px }
+.button.pin:before { background-position: 0 -276px }
+.button.pin:hover:before,
+.button.pin:focus:before,
+.button.pin:active:before { background-position: -12px -276px }
+.button.reload:before { background-position: 0 -300px }
+.button.reload:hover:before,
+.button.reload:focus:before,
+.button.reload:active:before { background-position: -12px -300px }
+.button.rss:before { background-position: 0 -312px }
+.button.rss:hover:before,
+.button.rss:focus:before,
+.button.rss:active:before { background-position: -12px -312px }
+.button.tag:before { background-position: 0 -324px }
+.button.tag:hover:before,
+.button.tag:focus:before,
+.button.tag:active:before { background-position: -12px -324px }
+.button.trash:before { background-position: 0 -336px }
+.button.trash:hover:before,
+.button.trash:focus:before,
+.button.trash:active:before { background-position: -12px -336px }
+.button.user:before { background-position: 0 -360px }
+.button.user:hover:before,
+.button.user:focus:before,
+.button.user:active:before { background-position: -12px -360px }
+/* =============================================================================
+   Button extensions
+   ========================================================================== */
+/* Danger button
+   ========================================================================== */
+.button.danger { color: #900 }
+.button.danger:hover,
+.button.danger:focus,
+.button.danger:active {
+    border-color: #b53f3a;
+    border-bottom-color: #a0302a;
+    color: #fff;
+    background-color: #dc5f59;
+}
+.button.danger:active,
+.button.danger.active {
+    border-color: #a0302a;
+    border-bottom-color: #bf4843;
+    background-color: #b33630;
+}
+/* Pill button
+   ========================================================================== */
+.button.pill { border-radius: 50em }
+/* Disabled button
+   ========================================================================== */
+.button.disable { opacity: 0.5 }
+/* Big button
+   ========================================================================== */
+.button.big { font-size: 14px }
+.button.big:before { top: 0 

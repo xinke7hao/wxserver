@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuyanbo.wx.dao.admin.UserMapper" >
+
+  <resultMap id="BaseResultMap" type="com.xuyanbo.wx.entity.admin.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="user_pass" property="userPass" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="depart_id" property="departId" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="is_admin" property="isAdmin" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    user_id, user_code, user_name, phone, depart_id, email, is_admin, user_status, user_type, create_time, update_time
+  </sql>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="Base_Column_List" /> from tm_user where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select user_id, user_code, user_pass, user_name, user_status, user_type, is_admin from tm_user where user_code = #{userCode,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getPassById" resultType="java.lang.String" parameterType="java.lang.Integer">
+  	select user_pass from tm_user where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="checkUsercodeValid" resultType="java.lang.Integer" parameterType="com.xuyanbo.wx.entity.admin.User">
+  	select count(1) from tm_user where user_code = #{userCode,jdbcType=VARCHAR} 
+    <if test="userId != null" >
+  		and user_id != #{userId,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from tm_user where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByIds" parameterType="list" >
+    delete from tm_user where user_id in <foreach collection="list" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+  
+  <delete id="deleteUserRoles" parameterType="java.lang.Integer" >
+    delete from tr_user_role
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertUserRoles">
+    insert into tr_user_role (user_id, role_id) select #{userId,jdbcType=INTEGER}, role_id from tm_role where role_id in (${roleIds})
+  </insert>
+  
+  <delete id="deleteUserGroups" parameterType="java.lang.Integer" >
+    delete from tr_user_group where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertUserGroups">
+    insert into tr_user_group (user_id, group_id) select #{userId,jdbcType=INTEGER}, group_id from tm_group where group_id in (${groupIds})
+  </insert>
+  
+  <insert id="insert" parameterType="com.xuyanbo.wx.entity.admin.User" >
+    insert into tm_user (user_id, user_code, user_pass, user_name, phone, depart_id, email, user_status, user_type, is_admin, create_time, update_time)
+    values (#{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{departId,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{userStatus,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{isAdmin,jdbcType=VARCHAR}, now(), now())
+  </insert>
+  
+  <update id="updateById" parameterType="com.xuyanbo.wx.entity.admin.User" >
+    update tm_user
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      depart_id = #{departId,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      is_admin = #{isAdmin,jdbcType=VARCHAR},
+      update_time = now()
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updatePassById" parameterType="com.xuyanbo.wx.entity.admin.User" >
+    update tm_user set user_pass = #{userPass,jdbcType=VARCHAR}, update_time = now() where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

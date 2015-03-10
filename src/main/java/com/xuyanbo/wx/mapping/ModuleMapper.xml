@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuyanbo.wx.dao.admin.ModuleMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.xuyanbo.wx.entity.admin.Module" >
+    <id column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="module_code" property="moduleCode" jdbcType="VARCHAR" />
+    <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="module_index" property="moduleIndex" jdbcType="INTEGER" />
+    <result column="module_status" property="moduleStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    module_id, module_code, module_name, module_index, module_status
+  </sql>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="Base_Column_List" /> from tm_module where module_id = #{moduleId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectModules" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select <include refid="Base_Column_List" /> from tm_module
+    <if test="value != null" >
+    	where module_status = #{moduleStatus,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from tm_module where module_id = #{moduleId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xuyanbo.wx.entity.admin.Module" >
+    insert into tm_module (module_id, module_code, module_name, module_index, module_status)
+    values (#{moduleId,jdbcType=INTEGER}, #{moduleCode,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR}, 
+      #{moduleIndex,jdbcType=INTEGER}, #{moduleStatus,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateById" parameterType="com.xuyanbo.wx.entity.admin.Module" >
+    update tm_module
+    set module_code = #{moduleCode,jdbcType=VARCHAR},
+      module_name = #{moduleName,jdbcType=VARCHAR},
+      module_index = #{moduleIndex,jdbcType=INTEGER},
+      module_status = #{moduleStatus,jdbcType=VARCHAR}
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </update>
+</mapper>
